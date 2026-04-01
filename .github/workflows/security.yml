@@ -18,6 +18,10 @@ on:
     - cron: '0 0 * * 0'  # Weekly scan
   workflow_dispatch:  # Allow manual trigger
 
+# Set environment variables to use Node.js 24
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
 jobs:
   security-scan:
     name: Security Vulnerability Scan
@@ -68,7 +72,7 @@ jobs:
       run: |
         # Check for critical vulnerabilities
         if grep -q '"severity": "critical"' safety-report.json; then
-          echo "❌ Critical vulnerabilities found!"
+          echo "Critical vulnerabilities found!"
           exit 1
         fi
-        echo "✅ No critical vulnerabilities found"
+        echo "No critical vulnerabilities found"
